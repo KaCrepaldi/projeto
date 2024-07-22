@@ -9,7 +9,9 @@ function tarefasCSS(cb) {
     
     return gulp.src([
         './node_modules/bootstrap/css/bootstrap.css',
-        './owl/css/owl.css'
+        './owl/css/owl.css',
+        './node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
+        './jquery-ui/jquery-ui.css'
     ])
         .pipe(concat('libs.css'))
         .pipe(cssmin())
