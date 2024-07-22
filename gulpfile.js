@@ -7,7 +7,10 @@ const image = require('gulp-image')
 
 function tarefasCSS(cb) {
     
-    return gulp.src('./gulp/**/*.css')
+    return gulp.src([
+        './node_modules/bootstrap/css/bootstrap.css',
+        './owl/css/owl.css'
+    ])
         .pipe(concat('libs.css'))
         .pipe(cssmin())
         .pipe(rename({ suffix: 'min'}))  // libs.min.css
