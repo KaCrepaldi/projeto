@@ -11,9 +11,11 @@ function tarefasCSS(cb) {
         './node_modules/bootstrap/css/bootstrap.css',
         './owl/css/owl.css',
         './node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
-        './jquery-ui/jquery-ui.css'
+        './jquery-ui/jquery-ui.css',
+        '.src/css/style.css'
+
     ])
-        .pipe(concat('libs.css'))
+        .pipe(concat('styles.css'))
         .pipe(cssmin())
         .pipe(rename({ suffix: 'min'}))  // libs.min.css
         .pipe(gulp.dest('./dist/css'))
@@ -21,7 +23,16 @@ function tarefasCSS(cb) {
 
 function tarefaJS(){
 
-    return gulp.src('./gulp/**/*.js')
+    return gulp.src([
+        './node_modules/jquery/jQuery.js',
+        './node_modules/bootstrap/js/bootstrap.js',
+        './owl/js/owl.js',
+        '.jquery-mask/jquery.mask.js',
+        'jquery-ui/jquery-ui.js',
+        '.src/js/custom.js',
+
+
+    ])
     .pipe(concat('libs.js'))
     .pipe(uglify())
     .pipe(rename({ suffix: '.min'})) //libs.min.js
