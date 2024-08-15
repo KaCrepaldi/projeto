@@ -1,13 +1,16 @@
+const { series} = require('gulp')
 const gulp = require('gulp')
 const concat = require('gulp-concat')
 const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
-const image = require('gulp-image')
+const image = require('gulp-imagemin')
+const stripJs = require('gulp-strip-comments')
+const stripCss = require('gulp-strip-css-comments')
 
-function tarefasCSS(cb) {
+function tarefasCSS(callback) {
     
-    return gulp.src([
+    gulp.src([
         './node_modules/bootstrap/css/bootstrap.css',
         './owl/css/owl.css',
         './node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
@@ -15,15 +18,22 @@ function tarefasCSS(cb) {
         '.src/css/style.css'
 
     ])
-        .pipe(concat('styles.css'))
-        .pipe(cssmin())
-        .pipe(rename({ suffix: 'min'}))  // libs.min.css
-        .pipe(gulp.dest('./dist/css'))
+        .pipe(stripCss())    // remove comentários
+        .pipe(concat('styles.css'))  //mescla arquivos
+        .pipe(cssmin())     //minifiva css
+        .pipe(rename({ suffix: 'min'}))  // style.min.css
+        .pipe(gulp.dest('./dist/css'))  // cria arquivo em novo diretório
+
+     cb()   
+
+
 }
 
-function tarefaJS(){
 
-    return gulp.src([
+
+function tarefaJS(callback){
+
+     gulp.src([
         './node_modules/jquery/jQuery.js',
         './node_modules/bootstrap/js/bootstrap.js',
         './owl/js/owl.js',
@@ -53,11 +63,24 @@ function tarefasImagem(){
             concurrent: 10,
             quiet: true
         }))
-        .pipe(gulp.dest('./projeto/images'))
+        .pipe(gulp.dest('./dist/imagens'))
 
+}   
+
+// POC - Proof of Concept
+function tarefasHTML(callback){
+    
+    gulp.src('./src/**/*.html')
+    .pipe(htmlmin({ collapseWhitespace: true}))
+    .pipe(gulp.dest('./dist'))
+
+    return callback()
 }
 
 
 exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
+
+exports.default = parallel( tarefasHTML, tarefasJS, tarefasCSS)
+
