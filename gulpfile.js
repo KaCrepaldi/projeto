@@ -82,5 +82,5 @@ exports.styles = tarefasCSS
 exports.scripts = tarefasJS
 exports.images = tarefasImagem
 
-exports.default = parallel( tarefasHTML, tarefasJS, tarefasCSS)
+exports.default = parallel( tarefasHTML, tarefaJS, tarefasCSS)
 
