@@ -4,7 +4,8 @@ const concat = require('gulp-concat')
 const cssmin = require('gulp-cssmin')
 const rename = require('gulp-rename')
 const uglify = require('gulp-uglify')
-const image = require('gulp-image')
+const image = require('gulp-imagemin')
+const htmlmin = require('gulp-htmlmin')
 const stripJs = require('gulp-strip-comments')
 const stripCss = require('gulp-strip-css-comments')
 
@@ -23,8 +24,7 @@ function tarefasCSS(callback) {
         .pipe(cssmin())     //minifiva css
         .pipe(rename({ suffix: 'min'}))  // style.min.css
         .pipe(gulp.dest('./dist/css'))  // cria arquivo em novo diretório
-
-     cb()   
+     callback()   
 
 
 }
@@ -79,7 +79,7 @@ function tarefasHTML(callback){
 
 
 exports.styles = tarefasCSS
-exports.scripts = tarefasJS
+exports.scripts = tarefaJS
 exports.images = tarefasImagem
 
 exports.default = parallel( tarefasHTML, tarefaJS, tarefasCSS)
